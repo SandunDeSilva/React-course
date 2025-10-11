@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ProductList } from "./components/ProductList";
 import { ProductCard } from "./components/ProductCard";
 import "./App.css";
@@ -52,17 +53,19 @@ function App() {
       </ProductList>
 
       <h2>Products which cost up to $500</h2>
-      <ul>
-        {products
-          .filter(({ price }) => price < 500)
-          .map(({ title, price }) => {
-            return (
-              <li key={title}>
+
+      {products
+        .filter(({ price }) => price < 500)
+        .map(({ title, price }) => {
+          return (
+            <Fragment key={title}>
+              <hr style={{ borderColor: "gray" }} />
+              <p>
                 {title} - ${price}
-              </li>
-            );
-          })}
-      </ul>
+              </p>
+            </Fragment>
+          );
+        })}
     </div>
   );
 }

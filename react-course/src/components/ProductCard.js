@@ -1,9 +1,4 @@
-export function ProductCard({
-  product,
-  background = "slategray",
-  onClick,
-  ...restProps
-}) {
+export function ProductCard({ product, background = "slategray", onClick }) {
   return (
     <article
       style={{
@@ -16,13 +11,19 @@ export function ProductCard({
       }}
     >
       <h2>{product.title}</h2>
-      <img src={product.imageSrc} alt={product.title} {...restProps} />
+      <img
+        src={product.imageSrc}
+        alt={product.title}
+        width={128}
+        height={128}
+      />
       <p>Specifications:</p>
       <ul style={{ padding: 0, listStyleType: "none" }}>
-        <li>{product.specifications[0]}</li>
-        <li>{product.specifications[1]}</li>
-        <li>{product.specifications[2]}</li>
+        {product.specifications.map((spec, index) => (
+          <li key={index}>{spec}</li>
+        ))}
       </ul>
+
       <button onClick={() => onClick({ product })}>
         Buy (from ${product.price})
       </button>

@@ -23,10 +23,26 @@ export function ProductCard({ product, background = "slategray", onClick }) {
           <li key={index}>{spec}</li>
         ))}
       </ul>
-
-      <button onClick={() => onClick({ product })}>
-        Buy (from ${product.price})
-      </button>
+      <Status stockCount={product.stockCount} />
+      {product.stockCount > 0 && (
+        <button onClick={() => onClick({ product })}>
+          Buy (from ${product.price})
+        </button>
+      )}
     </article>
   );
+}
+
+function Status({ stockCount }) {
+  const notAvailable = (
+    <p style={{ fontSize: "15px", color: "lightsalmon" }}>Out of stock</p>
+  );
+
+  const available = (
+    <p style={{ fontSize: "15px", color: "lightgreen" }}>
+      {stockCount} items available
+    </p>
+  );
+
+  return stockCount === 0 ? notAvailable : available;
 }

@@ -1,4 +1,12 @@
-export function ProductCard({ product, background = "slategray", onClick }) {
+export function ProductCard({ product, background = "slategray", onPurchase }) {
+  let stockCount = product.stockCount;
+
+  function handleClick() {
+    stockCount = stockCount - 1;
+    console.log("stockCount :", stockCount);
+    onPurchase(product);
+  }
+
   return (
     <article
       style={{
@@ -23,11 +31,9 @@ export function ProductCard({ product, background = "slategray", onClick }) {
           <li key={index}>{spec}</li>
         ))}
       </ul>
-      <Status stockCount={product.stockCount} />
-      {product.stockCount > 0 && (
-        <button onClick={() => onClick({ product })}>
-          Buy (from ${product.price})
-        </button>
+      <Status stockCount={stockCount} />
+      {stockCount > 0 && (
+        <button onClick={handleClick}>Buy (from ${product.price})</button>
       )}
     </article>
   );

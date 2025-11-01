@@ -4,7 +4,7 @@ import { ProductCard } from "./components/ProductCard";
 import "./App.css";
 
 function App() {
-  function handleClick({ product }) {
+  function handlePurchase(product) {
     alert(`You clicked on ${product.title} which costs $${product.price}`);
   }
   const products = [
@@ -16,7 +16,7 @@ function App() {
         "3x or 5x Telephoto Camera",
         "Upto 29 hours video playback",
       ],
-      stockCount:10,
+      stockCount: 10,
       price: 999,
     },
     {
@@ -27,7 +27,7 @@ function App() {
         "Dust, sweat, and water resistant",
         "Upto 6 hours listening time",
       ],
-      stockCount:0,
+      stockCount: 0,
       price: 249,
     },
     {
@@ -38,7 +38,7 @@ function App() {
         "Always-On display",
         "Upto 18 hours normal use",
       ],
-      stockCount:6,
+      stockCount: 6,
       price: 399,
     },
   ];
@@ -50,7 +50,7 @@ function App() {
           <ProductCard
             key={product.title}
             product={product}
-            onClick={handleClick}
+            onPurchase={handlePurchase}
           />
         ))}
       </ProductList>

@@ -1,12 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { ProductList } from "./components/ProductList";
 import { ProductCard } from "./components/ProductCard";
+import { ProductFilter } from "./components/ProductFilter";
 import "./App.css";
 
 function App() {
-  function handlePurchase(product) {
-    alert(`You clicked on ${product.title} which costs $${product.price}`);
-  }
   const products = [
     {
       imageSrc: "images/iphone.png",
@@ -43,6 +41,28 @@ function App() {
     },
   ];
 
+  const [filters, setFilters] = useState({
+    price: {
+      min: 0,
+      max: 999,
+    },
+    other: "other values",
+  });
+
+  function handlePurchase(product) {
+    alert(`You clicked on ${product.title} which costs $${product.price}`);
+  }
+
+  function handleFilter(key, value) {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      price: {
+        ...prevFilters.price,
+        [key]: value,
+      },
+    }));
+  }
+
   return (
     <div className="App">
       <ProductList>
@@ -55,10 +75,14 @@ function App() {
         ))}
       </ProductList>
 
-      <h2>Products which cost up to $500</h2>
+      <h2>Products filtered by price</h2>
+      <ProductFilter filters={filters} onFilter={handleFilter} />
 
       {products
-        .filter(({ price }) => price < 500)
+        .filter(
+          ({ price }) =>
+            price >= filters.price.min && price <= filters.price.max
+        )
         .map(({ title, price }) => {
           return (
             <Fragment key={title}>

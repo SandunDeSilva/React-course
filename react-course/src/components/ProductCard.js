@@ -4,8 +4,13 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
   const [showMore, setShowMore] = useState(false);
 
   function handleClick() {
-    setStockCount(stockCount - 1);
+    setStockCount((prevStockCount) => prevStockCount - 1);
     onPurchase(product);
+  }
+
+  function handleTwoClicks() {
+    setStockCount((prevStockCount) => prevStockCount - 1);
+    setStockCount((prevStockCount) => prevStockCount - 1);
   }
 
   return (
@@ -27,7 +32,9 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
         height={128}
       />
       <p>Specifications:</p>
-      <button onClick={()=>setShowMore(!showMore)}>{showMore ? 'hide' : 'show'}</button>
+      <button onClick={() => setShowMore(!showMore)}>
+        {showMore ? "hide" : "show"}
+      </button>
       {showMore && (
         <ul style={{ padding: 0, listStyleType: "none" }}>
           {product.specifications.map((spec, index) => (
@@ -37,8 +44,12 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
       )}
       <Status stockCount={stockCount} />
       {stockCount > 0 && (
-        <button onClick={handleClick}>Buy (from ${product.price})</button>
+        <>
+          <p>Price: ${product.price}</p>
+          <button onClick={handleClick}>Buy</button>
+        </>
       )}
+      {stockCount > 1 && <button onClick={handleTwoClicks}>Buy 2</button>}
     </article>
   );
 }

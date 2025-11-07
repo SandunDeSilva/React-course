@@ -1,9 +1,10 @@
+import { useState } from "react";
 export function ProductCard({ product, background = "slategray", onPurchase }) {
-  let stockCount = product.stockCount;
+  const [stockCount, setStockCount] = useState(product.stockCount);
+  const [showMore, setShowMore] = useState(false);
 
   function handleClick() {
-    stockCount = stockCount - 1;
-    console.log("stockCount :", stockCount);
+    setStockCount(stockCount - 1);
     onPurchase(product);
   }
 
@@ -26,11 +27,14 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
         height={128}
       />
       <p>Specifications:</p>
-      <ul style={{ padding: 0, listStyleType: "none" }}>
-        {product.specifications.map((spec, index) => (
-          <li key={index}>{spec}</li>
-        ))}
-      </ul>
+      <button onClick={()=>setShowMore(!showMore)}>{showMore ? 'hide' : 'show'}</button>
+      {showMore && (
+        <ul style={{ padding: 0, listStyleType: "none" }}>
+          {product.specifications.map((spec, index) => (
+            <li key={index}>{spec}</li>
+          ))}
+        </ul>
+      )}
       <Status stockCount={stockCount} />
       {stockCount > 0 && (
         <button onClick={handleClick}>Buy (from ${product.price})</button>

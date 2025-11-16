@@ -4,6 +4,15 @@ import { ProductCard } from "./components/ProductCard";
 import { ProductFilter } from "./components/ProductFilter";
 import "./App.css";
 
+const styles = {
+  ListDivider: {
+    borderColor: "slategray",
+  },
+  ListTitle: {
+    margin: "8px 0",
+  },
+};
+
 function App() {
   const products = [
     {
@@ -86,8 +95,8 @@ function App() {
         .map(({ title, price }) => {
           return (
             <Fragment key={title}>
-              <hr style={{ borderColor: "gray" }} />
-              <p>
+              <hr style={styles.ListDivider} />
+              <p style={styles.ListTitle}>
                 {title} - ${price}
               </p>
             </Fragment>

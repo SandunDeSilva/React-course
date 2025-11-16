@@ -1,4 +1,21 @@
 import { useState } from "react";
+
+const styles = {
+  Container: {
+    width: "100%",
+    border: "1px solid white",
+    borderRadius: "8px",
+    padding: "16px",
+    textAlign: "center",
+  },
+  List: {
+    listStyleType: "none",
+    padding: 0,
+  },
+  NotAvailableStatus: { fontSize: "15px", color: "lightsalmon" },
+  AvailableStatus: { fontSize: "15px", color: "lightgreen" },
+};
+
 export function ProductCard({ product, background = "slategray", onPurchase }) {
   const [stockCount, setStockCount] = useState(product.stockCount);
   const [showMore, setShowMore] = useState(false);
@@ -14,16 +31,7 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
   }
 
   return (
-    <article
-      style={{
-        background,
-        width: "100%",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        padding: "16px",
-        textAlign: "center",
-      }}
-    >
+    <article style={{ ...styles.Container, background }}>
       <h2>{product.title}</h2>
       <img
         src={product.imageSrc}
@@ -36,7 +44,7 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
         {showMore ? "hide" : "show"}
       </button>
       {showMore && (
-        <ul style={{ padding: 0, listStyleType: "none" }}>
+        <ul style={styles.List}>
           {product.specifications.map((spec, index) => (
             <li key={index}>{spec}</li>
           ))}
@@ -55,14 +63,10 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
 }
 
 function Status({ stockCount }) {
-  const notAvailable = (
-    <p style={{ fontSize: "15px", color: "lightsalmon" }}>Out of stock</p>
-  );
+  const notAvailable = <p style={styles.NotAvailableStatus}>Out of stock</p>;
 
   const available = (
-    <p style={{ fontSize: "15px", color: "lightgreen" }}>
-      {stockCount} items available
-    </p>
+    <p style={styles.AvailableStatus}>{stockCount} items available</p>
   );
 
   return stockCount === 0 ? notAvailable : available;

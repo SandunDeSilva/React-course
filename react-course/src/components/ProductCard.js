@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ProductCard.css";
+import styles from "./ProductCard.module.css";
 
 export function ProductCard({ product, background = "slategray", onPurchase }) {
   const [stockCount, setStockCount] = useState(product.stockCount);
@@ -16,7 +16,7 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
   }
 
   return (
-    <article className="Container">
+    <article className={styles.Container}>
       <h2>{product.title}</h2>
       <img
         src={product.imageSrc}
@@ -29,7 +29,7 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
         {showMore ? "hide" : "show"}
       </button>
       {showMore && (
-        <ul className="Specification">
+        <ul className={styles.Specification}>
           {product.specifications.map((spec, index) => (
             <li key={index}>{spec}</li>
           ))}
@@ -48,10 +48,10 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
 }
 
 function Status({ stockCount }) {
-  const notAvailable = <p className="NotAvailableStatus">Out of stock</p>;
+  const notAvailable = <p className={styles.NotAvailableStatus}>Out of stock</p>;
 
   const available = (
-    <p className="AvailableStatus">{stockCount} items available</p>
+    <p className={styles.AvailableStatus}>{stockCount} items available</p>
   );
 
   return stockCount === 0 ? notAvailable : available;

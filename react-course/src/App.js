@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { ProductList } from "./components/ProductList";
 import { ProductCard } from "./components/ProductCard";
 import { ProductFilter } from "./components/ProductFilter";
-import "./App.css";
+import styles from "./App.module.css";
 
 function App() {
   const products = [
@@ -64,7 +64,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <ProductList>
         {products.map((product) => (
           <ProductCard
@@ -86,8 +86,8 @@ function App() {
         .map(({ title, price }) => {
           return (
             <Fragment key={title}>
-              <hr className="ListDivider" />
-              <p className="ListTitle">
+              <hr className={styles.ListDivider} />
+              <p className={styles.ListTitle}>
                 {title} - ${price}
               </p>
             </Fragment>

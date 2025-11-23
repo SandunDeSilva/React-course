@@ -1,7 +1,13 @@
 import { useState } from "react";
 import styles from "./ProductCard.module.css";
 
-export function ProductCard({ product, background = "slategray", onPurchase }) {
+export function ProductCard({
+  product,
+  isFavorite ,
+  background = "slategray",
+  onPurchase,
+  onFavorite,
+}) {
   const [stockCount, setStockCount] = useState(product.stockCount);
   const [showMore, setShowMore] = useState(false);
 
@@ -17,6 +23,12 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
 
   return (
     <article className={styles.Container}>
+      <button
+        className={styles.Favorite}
+        onClick={() => onFavorite(product.id)}
+      >
+        {isFavorite ? "❤️" : "🤍"}
+      </button>
       <h2>{product.title}</h2>
       <img
         src={product.imageSrc}
@@ -48,7 +60,9 @@ export function ProductCard({ product, background = "slategray", onPurchase }) {
 }
 
 function Status({ stockCount }) {
-  const notAvailable = <p className={styles.NotAvailableStatus}>Out of stock</p>;
+  const notAvailable = (
+    <p className={styles.NotAvailableStatus}>Out of stock</p>
+  );
 
   const available = (
     <p className={styles.AvailableStatus}>{stockCount} items available</p>

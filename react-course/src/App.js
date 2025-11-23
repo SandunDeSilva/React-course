@@ -7,6 +7,7 @@ import styles from "./App.module.css";
 function App() {
   const products = [
     {
+      id: 1,
       imageSrc: "images/iphone.png",
       title: "iPhone 15 Pro",
       specifications: [
@@ -18,6 +19,7 @@ function App() {
       price: 999,
     },
     {
+      id: 2,
       imageSrc: "images/airpods.png",
       title: "AirPods Pro 2",
       specifications: [
@@ -29,6 +31,7 @@ function App() {
       price: 249,
     },
     {
+      id: 3,
       imageSrc: "images/apple-watch.png",
       title: "Apple Watch 9",
       specifications: [
@@ -49,6 +52,8 @@ function App() {
     other: "other values",
   });
 
+  const [favorites, setFavorites] = useState([]);
+
   function handlePurchase(product) {
     alert(`You clicked on ${product.title} which costs $${product.price}`);
   }
@@ -63,6 +68,14 @@ function App() {
     }));
   }
 
+  function handleFavorite(productId) {
+    if (favorites.includes(productId)) {
+      setFavorites((prevFavorites) =>prevFavorites.filter((id) => id!==productId))
+    } else {
+      setFavorites((prevFavorites) => [...prevFavorites, productId]);
+    }
+  }
+
   return (
     <div className={styles.App}>
       <ProductList>
@@ -70,7 +83,9 @@ function App() {
           <ProductCard
             key={product.title}
             product={product}
+            isFavorite={favorites.includes(product.id)}
             onPurchase={handlePurchase}
+            onFavorite={handleFavorite}
           />
         ))}
       </ProductList>
